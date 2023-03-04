@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block title %}粤语语音识别{% endblock %}
+
+{% block head %}
+    <script type="text/javascript" src="{{ url_for('static', filename='speech/js/speech_recorder.js') }}"></script>
+{% endblock %}
+
+{% block sections %}
+    <span style="display: none;"><audio id="voice"></audio></span>
+
+    <span id="rec_err" style="display: none; text-align: center;">
+      <div>该浏览器不支持录音或请使用https协议 :(</div>
+      <div>请尝试 <a href="https://www.google.com/chrome/">Google Chrome</a> </div>
+    </span>
+
+    <section id="id-form-section">
+        <input type="file" id="multiaudio" multiple style="position: absolute; right: 75px; top: 75px;">
+        <h1>
+            粤语语音识别
+        </h1>
+        <div id="info">
+            点击录音
+        </div>
+        <i id="rec_btn" class="fa fa-microphone act_btn"></i>
+        <div id="recording-meter"></div>
+
+        <div id="error_field" style="display: none;"></div>
+
+    </section>
+    <div id="recognition_result">
+        <div id="recognition_result_table">
+            <table id="table_result">
+                <thead>
+                    <tr>
+                        <th class="model_audio">音频</th>
+                        <th class="model_text">ASR结果</th>
+                        <th class="model_text">文本断句</th>
+                        <th class="model_text">文本规范化</th>
+                    </tr>
+                </thead>
+
+                <!-- <thead>
+                    <tr>
+                        <th class="image_audio">audio</th>
+                        <th class="image_audio">audio</th>
+                        <th class="image_audio">audio</th>
+                        <th class="image_audio">audio</th>
+                    </tr>
+                </thead> -->
+                <tbody id="table_body_result">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="static/speech/js/web-audio-recording-tests-simpler-master/js/WebAudioPeakMeter.js"></script>
+    <script src="static/speech/js/web-audio-recording-tests-simpler-master/js/encoder-wav-worker.js"></script>
+    <script src="static/speech/js/web-audio-recording-tests-simpler-master/js/RecorderService.js"></script>
+    <script src="static/speech/js/web-audio-recording-tests-simpler-master/js/app.js"></script>
+    <script>
+        function initApp () {
+          let app = new App();
+          app.init()
+        }
+
+        window.onload = function (e) { initApp() };
+    </script>
+{% endblock %}
